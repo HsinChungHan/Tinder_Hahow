@@ -21,19 +21,24 @@ class HomeViewController: UIViewController {
             view.backgroundColor = color
             return view
         }
-        let topStackView = UIStackView.init(arrangedSubviews: topSubviews)
-        topStackView.distribution = .fillEqually
-        topStackView.axis = .horizontal
-        topStackView.translatesAutoresizingMaskIntoConstraints = false
-        topStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        let topStackView = TopNavigationStackView.init(frame: .zero)
+//        let topStackView = UIStackView.init(arrangedSubviews: topSubviews)
+//        topStackView.distribution = .fillEqually
+//        topStackView.axis = .horizontal
+//        topStackView.translatesAutoresizingMaskIntoConstraints = false
+//        topStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         let middleView = UIView()
         middleView.backgroundColor = .red
         
-        let bottomStackView = UIView()
-        bottomStackView.backgroundColor = .yellow
-        bottomStackView.translatesAutoresizingMaskIntoConstraints = false
-        bottomStackView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+//        let bottomStackView = UIView()
+//        bottomStackView.backgroundColor = .yellow
+//        bottomStackView.translatesAutoresizingMaskIntoConstraints = false
+//        bottomStackView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        
+        let bottomStackView = HomeButtonStackView.init(frame: .zero)
+        
         
         let subViews = [topStackView, middleView, bottomStackView]
         
@@ -42,7 +47,8 @@ class HomeViewController: UIViewController {
 //        overallStackView.distribution = .fillEqually
         
         view.addSubview(overallStackView)
-        overallStackView.fillSuperView()
+//        overallStackView.fillSuperView()
+        overallStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
     }
     
 }

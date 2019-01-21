@@ -14,6 +14,8 @@
 		D16B433A21F581F500A4A702 /* TinderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B433921F581F500A4A702 /* TinderUITests.swift */; };
 		D16B434821F584BB00A4A702 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B434721F584BB00A4A702 /* HomeViewController.swift */; };
 		D16B434A21F58FB200A4A702 /* UIView_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B434921F58FB200A4A702 /* UIView_Extension.swift */; };
+		D16B435121F59E6700A4A702 /* TopNavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B435021F59E6700A4A702 /* TopNavigationStackView.swift */; };
+		D16B435421F59EA400A4A702 /* HomeButtonStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B435321F59EA400A4A702 /* HomeButtonStackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		D16B433B21F581F500A4A702 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D16B434721F584BB00A4A702 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D16B434921F58FB200A4A702 /* UIView_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_Extension.swift; sourceTree = "<group>"; };
+		D16B435021F59E6700A4A702 /* TopNavigationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
+		D16B435321F59EA400A4A702 /* HomeButtonStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,7 @@
 		D16B431821F581F400A4A702 /* Tinder */ = {
 			isa = PBXGroup;
 			children = (
+				D16B435221F59E7600A4A702 /* Views */,
 				D16B431921F581F400A4A702 /* AppDelegate.swift */,
 				D16B434721F584BB00A4A702 /* HomeViewController.swift */,
 				D16B434921F58FB200A4A702 /* UIView_Extension.swift */,
@@ -123,6 +128,15 @@
 				D16B433B21F581F500A4A702 /* Info.plist */,
 			);
 			path = TinderUITests;
+			sourceTree = "<group>";
+		};
+		D16B435221F59E7600A4A702 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D16B435021F59E6700A4A702 /* TopNavigationStackView.swift */,
+				D16B435321F59EA400A4A702 /* HomeButtonStackView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,7 +271,9 @@
 			files = (
 				D16B431A21F581F400A4A702 /* AppDelegate.swift in Sources */,
 				D16B434821F584BB00A4A702 /* HomeViewController.swift in Sources */,
+				D16B435421F59EA400A4A702 /* HomeButtonStackView.swift in Sources */,
 				D16B434A21F58FB200A4A702 /* UIView_Extension.swift in Sources */,
+				D16B435121F59E6700A4A702 /* TopNavigationStackView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
