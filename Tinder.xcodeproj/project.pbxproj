@@ -13,6 +13,7 @@
 		D16B432F21F581F500A4A702 /* TinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B432E21F581F500A4A702 /* TinderTests.swift */; };
 		D16B433A21F581F500A4A702 /* TinderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B433921F581F500A4A702 /* TinderUITests.swift */; };
 		D16B434821F584BB00A4A702 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B434721F584BB00A4A702 /* HomeViewController.swift */; };
+		D16B434A21F58FB200A4A702 /* UIView_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B434921F58FB200A4A702 /* UIView_Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		D16B433921F581F500A4A702 /* TinderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinderUITests.swift; sourceTree = "<group>"; };
 		D16B433B21F581F500A4A702 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D16B434721F584BB00A4A702 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		D16B434921F58FB200A4A702 /* UIView_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 			children = (
 				D16B431921F581F400A4A702 /* AppDelegate.swift */,
 				D16B434721F584BB00A4A702 /* HomeViewController.swift */,
+				D16B434921F58FB200A4A702 /* UIView_Extension.swift */,
 				D16B432021F581F500A4A702 /* Assets.xcassets */,
 				D16B432221F581F500A4A702 /* LaunchScreen.storyboard */,
 				D16B432521F581F500A4A702 /* Info.plist */,
@@ -254,6 +257,7 @@
 			files = (
 				D16B431A21F581F400A4A702 /* AppDelegate.swift in Sources */,
 				D16B434821F584BB00A4A702 /* HomeViewController.swift in Sources */,
+				D16B434A21F58FB200A4A702 /* UIView_Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

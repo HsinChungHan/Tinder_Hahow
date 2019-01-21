@@ -31,7 +31,13 @@ class HomeViewController: UIViewController {
         overallStackView.distribution = .fillEqually
         
         view.addSubview(overallStackView)
-        overallStackView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+//        overallStackView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+//        overallStackView.anchor(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        overallStackView.fillSuperView()
+//        overallStackView.fillSuperView(padding: UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10))
     }
     
 }
+
+
+
