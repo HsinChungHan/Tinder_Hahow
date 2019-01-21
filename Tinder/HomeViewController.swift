@@ -15,26 +15,34 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        let topStackView = UIView()
-        topStackView.backgroundColor = .blue
+        
+        let topSubviews = [UIColor.lightGray, .gray, .darkGray].map { (color) -> UIView in
+            let view = UIView()
+            view.backgroundColor = color
+            return view
+        }
+        let topStackView = UIStackView.init(arrangedSubviews: topSubviews)
+        topStackView.distribution = .fillEqually
+        topStackView.axis = .horizontal
+        topStackView.translatesAutoresizingMaskIntoConstraints = false
+        topStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         let middleView = UIView()
         middleView.backgroundColor = .red
         
         let bottomStackView = UIView()
-        bottomStackView.backgroundColor = .purple
+        bottomStackView.backgroundColor = .yellow
+        bottomStackView.translatesAutoresizingMaskIntoConstraints = false
+        bottomStackView.heightAnchor.constraint(equalToConstant: 120).isActive = true
         
         let subViews = [topStackView, middleView, bottomStackView]
         
         let overallStackView = UIStackView.init(arrangedSubviews: subViews)
         overallStackView.axis = .vertical
-        overallStackView.distribution = .fillEqually
+//        overallStackView.distribution = .fillEqually
         
         view.addSubview(overallStackView)
-//        overallStackView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-//        overallStackView.anchor(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         overallStackView.fillSuperView()
-//        overallStackView.fillSuperView(padding: UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10))
     }
     
 }
