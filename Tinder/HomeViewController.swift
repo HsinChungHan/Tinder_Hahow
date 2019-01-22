@@ -9,48 +9,41 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+    //MARK:- Properties
+    let topStackView = TopNavigationStackView.init(frame: .zero)
+    let cardDocksView = UIView()
+    let bottomStackView = HomeButtonStackView.init(frame: .zero)
     
     
+    //MARK:- ViewController's lifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        
-        
-        let topSubviews = [UIColor.lightGray, .gray, .darkGray].map { (color) -> UIView in
-            let view = UIView()
-            view.backgroundColor = color
-            return view
-        }
-        
-        let topStackView = TopNavigationStackView.init(frame: .zero)
-//        let topStackView = UIStackView.init(arrangedSubviews: topSubviews)
-//        topStackView.distribution = .fillEqually
-//        topStackView.axis = .horizontal
-//        topStackView.translatesAutoresizingMaskIntoConstraints = false
-//        topStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        
-        let middleView = UIView()
-        middleView.backgroundColor = .red
-        
-//        let bottomStackView = UIView()
-//        bottomStackView.backgroundColor = .yellow
-//        bottomStackView.translatesAutoresizingMaskIntoConstraints = false
-//        bottomStackView.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        
-        let bottomStackView = HomeButtonStackView.init(frame: .zero)
-        
-        
-        let subViews = [topStackView, middleView, bottomStackView]
-        
-        let overallStackView = UIStackView.init(arrangedSubviews: subViews)
-        overallStackView.axis = .vertical
-//        overallStackView.distribution = .fillEqually
-        
-        view.addSubview(overallStackView)
-//        overallStackView.fillSuperView()
-        overallStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        setupLayout()
     }
     
+    //MARK:- Fileprivate
+    fileprivate func setupDummyCard() {
+        let cardView = CardView()
+        cardDocksView.addSubview(cardView)
+        cardView.fillSuperView()
+    }
+    
+    fileprivate func setupLayout(){
+        view.backgroundColor = .white
+        
+        let subViews = [topStackView, cardDocksView, bottomStackView]
+        let overallStackView = UIStackView.init(arrangedSubviews: subViews)
+        overallStackView.axis = .vertical
+        
+        view.addSubview(overallStackView)
+        overallStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        overallStackView.isLayoutMarginsRelativeArrangement = true
+        overallStackView.layoutMargins = .init(top: 0, left: 8, bottom: 0, right: 8)
+        
+        overallStackView.bringSubviewToFront(cardDocksView)
+        
+        setupDummyCard()
+    }
 }
 
 
