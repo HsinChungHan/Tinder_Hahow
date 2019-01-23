@@ -9,7 +9,9 @@
 import UIKit
 
 class CardView: UIView {
-
+    //MARK:- Configuration
+    let threhold: CGFloat = 80
+    
     fileprivate let imageView: UIImageView = {
        let iv = UIImageView.init(image: #imageLiteral(resourceName: "girl"))
         iv.contentMode = .scaleAspectFill
@@ -28,7 +30,7 @@ class CardView: UIView {
         case .changed:
             handleChanged(gesture)
         case .ended:
-            handleEnded()
+            handleEnded(gesture)
         default:
             ()
         }
@@ -54,14 +56,27 @@ class CardView: UIView {
     
     fileprivate func handleChanged(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: nil)
-        transform = CGAffineTransform.init(translationX: translation.x, y: translation.y)
+        //how to convert degrees into radians
+        let degrees: CGFloat = translation.x / 20
+        let angle: CGFloat = degrees * .pi / 180
+        let rotationTransformation = CGAffineTransform.init(rotationAngle: angle)
+        transform = rotationTransformation.translatedBy(x: translation.x, y: translation.y)
     }
     
-    fileprivate func handleEnded() {
+    fileprivate func handleEnded(_ gesture: UIPanGestureRecognizer) {
+        let translationDirection: CGFloat = gesture.translation(in: nil).x > 0 ? 1 : -1
+        let shouldDismiss = abs(gesture.translation(in: nil).x) > threhold
         UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseInOut, animations: {[weak self] in
-            self?.transform = .identity
-        }) { (_) in
-            
+            if shouldDismiss{
+                self?.frame = CGRect.init(x: 1000 * translationDirection, y: 0, width: (self?.frame.width)!, height: (self?.frame.height)!)
+            }else{
+                self?.transform = .identity
+            }
+        }) { [weak self] (completed) in
+            if completed{
+                self?.transform = .identity
+                self?.frame = CGRect.init(x: 0, y: 0, width: (self?.superview?.frame.width)!, height: (self?.superview?.frame.height)!)
+            }
         }
     }
 }
