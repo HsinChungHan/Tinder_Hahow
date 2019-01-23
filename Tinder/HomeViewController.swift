@@ -14,18 +14,43 @@ class HomeViewController: UIViewController {
     let cardDocksView = UIView()
     let bottomStackView = HomeButtonStackView.init(frame: .zero)
     
+    let users = [
+        User(name: "Katy", age: 18, profession: "Music DJ", imageName: "lady1"),
+        User(name: "Annie", age: 26, profession: "Nurse", imageName: "lady2")
+    ]
     
     //MARK:- ViewController's lifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
+        
     }
     
     //MARK:- Fileprivate
     fileprivate func setupDummyCard() {
-        let cardView = CardView()
-        cardDocksView.addSubview(cardView)
-        cardView.fillSuperView()
+        users.forEach { (user) in
+            let cardView = CardView()
+            cardDocksView.addSubview(cardView)
+            cardView.fillSuperView()
+            cardView.informationLabel.text = "\(user.name) \(user.age) \n\(user.profession)"
+            cardView.imageView.image = UIImage.init(named: user.imageName)
+            
+            
+            let nameAtrributedString = NSAttributedString.init(string: user.name, attributes: [.font : UIFont.systemFont(ofSize: 32, weight: .heavy)])
+            
+            let ageAtrributedString = NSAttributedString.init(string: " \(user.age)", attributes: [.font : UIFont.systemFont(ofSize: 24, weight: .regular)])
+            
+            let professionAtrributedString = NSAttributedString.init(string: "\n\(user.profession)", attributes: [.font : UIFont.systemFont(ofSize: 18, weight: .heavy)])
+            
+            
+            let attributedText = NSMutableAttributedString.init()
+            attributedText.append(nameAtrributedString)
+            attributedText.append(ageAtrributedString)
+            attributedText.append(professionAtrributedString)
+            
+            cardView.informationLabel.attributedText = attributedText
+        }
+        
     }
     
     fileprivate func setupLayout(){

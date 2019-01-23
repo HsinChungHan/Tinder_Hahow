@@ -12,11 +12,20 @@ class CardView: UIView {
     //MARK:- Configuration
     let threhold: CGFloat = 80
     
-    fileprivate let imageView: UIImageView = {
-       let iv = UIImageView.init(image: #imageLiteral(resourceName: "girl"))
+    let imageView: UIImageView = {
+       let iv = UIImageView.init(image: #imageLiteral(resourceName: "lady1"))
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         return iv
+    }()
+    
+    let informationLabel: UILabel = {
+        let lb = UILabel()
+        lb.textColor = .white
+        lb.font = UIFont.systemFont(ofSize: 34, weight: .heavy)
+        lb.text = "TEST NAME TEST AGE \nTEST PROFESSION"
+        lb.numberOfLines = 0
+        return lb
     }()
     
     override init(frame: CGRect) {
@@ -47,6 +56,9 @@ class CardView: UIView {
         
         addSubview(imageView)
         imageView.fillSuperView()
+        
+        addSubview(informationLabel)
+        informationLabel.anchor(top: nil, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 16, right: 16), size: .zero)
     }
     
     fileprivate func addPanGesture() {
@@ -68,14 +80,16 @@ class CardView: UIView {
         let shouldDismiss = abs(gesture.translation(in: nil).x) > threhold
         UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseInOut, animations: {[weak self] in
             if shouldDismiss{
-                self?.frame = CGRect.init(x: 1000 * translationDirection, y: 0, width: (self?.frame.width)!, height: (self?.frame.height)!)
+                self?.frame = CGRect.init(x: 600 * translationDirection, y: 0, width: (self?.frame.width)!, height: (self?.frame.height)!)
             }else{
                 self?.transform = .identity
             }
         }) { [weak self] (completed) in
             if completed{
                 self?.transform = .identity
-                self?.frame = CGRect.init(x: 0, y: 0, width: (self?.superview?.frame.width)!, height: (self?.superview?.frame.height)!)
+                if shouldDismiss{
+                    self?.removeFromSuperview()
+                }
             }
         }
     }
