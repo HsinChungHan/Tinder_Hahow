@@ -7,9 +7,20 @@
 //
 
 import Foundation
-
+import UIKit
 struct User {
     let name: String, age: Int, profession: String, imageName: String
+    
+    func toCardViewModel() -> CardViewModel{
+        let nameAtrributedString = NSAttributedString.init(string: name, attributes: [.font : UIFont.systemFont(ofSize: 32, weight: .heavy)])
+        let ageAtrributedString = NSAttributedString.init(string: " \(age)", attributes: [.font : UIFont.systemFont(ofSize: 24, weight: .regular)])
+        let professionAtrributedString = NSAttributedString.init(string: "\n\(profession)", attributes: [.font : UIFont.systemFont(ofSize: 18, weight: .heavy)])
+        let attributedText = NSMutableAttributedString.init()
+        attributedText.append(nameAtrributedString)
+        attributedText.append(ageAtrributedString)
+        attributedText.append(professionAtrributedString)
+        return CardViewModel.init(imageName: imageName, attributedText: attributedText, textAlignment: .left)
+    }
 }
 
 
