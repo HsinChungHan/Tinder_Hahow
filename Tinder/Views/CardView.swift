@@ -9,17 +9,29 @@
 import UIKit
 
 class CardView: UIView {
-    //MARK:- Configuration
-    let threhold: CGFloat = 80
+    fileprivate var cardViewModel: CardViewModel!{
+        didSet{
+            imageView.image = UIImage.init(named: cardViewModel.imageName)
+            informationLabel.attributedText = cardViewModel.attributedText
+            informationLabel.textAlignment = cardViewModel.textAlignment
+        }
+    }
     
-    let imageView: UIImageView = {
+    public func setupViewModel(cardViewModel: CardViewModel){
+        self.cardViewModel = cardViewModel
+    }
+    
+    //MARK:- Configuration
+    fileprivate let threhold: CGFloat = 80
+    
+    fileprivate let imageView: UIImageView = {
        let iv = UIImageView.init(image: #imageLiteral(resourceName: "lady1"))
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         return iv
     }()
     
-    let informationLabel: UILabel = {
+    fileprivate let informationLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .white
         lb.font = UIFont.systemFont(ofSize: 34, weight: .heavy)

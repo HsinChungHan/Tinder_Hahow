@@ -8,6 +8,11 @@
 
 import Foundation
 import UIKit
+
+protocol ProducesCardViewModel {
+    func toCardViewModel() -> CardViewModel
+}
+
 struct CardViewModel {
     //define some properties wd are gonna display or rander on the card view
     

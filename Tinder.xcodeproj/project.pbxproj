@@ -19,6 +19,7 @@
 		D16B435A21F6CA4A00A4A702 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B435921F6CA4A00A4A702 /* CardView.swift */; };
 		D16B436021F81BA500A4A702 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B435F21F81BA500A4A702 /* User.swift */; };
 		D16B436C21F9597F00A4A702 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B436B21F9597F00A4A702 /* CardViewModel.swift */; };
+		D16B437221F98A8800A4A702 /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16B437121F98A8800A4A702 /* Advertiser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		D16B435921F6CA4A00A4A702 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		D16B435F21F81BA500A4A702 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D16B436B21F9597F00A4A702 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
+		D16B437121F98A8800A4A702 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				D16B435F21F81BA500A4A702 /* User.swift */,
+				D16B437121F98A8800A4A702 /* Advertiser.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 			files = (
 				D16B431A21F581F400A4A702 /* AppDelegate.swift in Sources */,
 				D16B434821F584BB00A4A702 /* HomeViewController.swift in Sources */,
+				D16B437221F98A8800A4A702 /* Advertiser.swift in Sources */,
 				D16B435421F59EA400A4A702 /* HomeButtonStackView.swift in Sources */,
 				D16B434A21F58FB200A4A702 /* UIView_Extension.swift in Sources */,
 				D16B436C21F9597F00A4A702 /* CardViewModel.swift in Sources */,

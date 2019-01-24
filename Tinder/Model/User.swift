@@ -8,9 +8,9 @@
 
 import Foundation
 import UIKit
-struct User {
-    let name: String, age: Int, profession: String, imageName: String
+struct User: ProducesCardViewModel {
     
+    let name: String, age: Int, profession: String, imageName: String
     func toCardViewModel() -> CardViewModel{
         let nameAtrributedString = NSAttributedString.init(string: name, attributes: [.font : UIFont.systemFont(ofSize: 32, weight: .heavy)])
         let ageAtrributedString = NSAttributedString.init(string: " \(age)", attributes: [.font : UIFont.systemFont(ofSize: 24, weight: .regular)])
