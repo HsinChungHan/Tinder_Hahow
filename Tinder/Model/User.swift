@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 struct User: ProducesCardViewModel {
     
-    let name: String, age: Int, profession: String, imageName: String
+    let name: String, age: Int, profession: String, imageNames: [String]
     func toCardViewModel() -> CardViewModel{
         let nameAtrributedString = NSAttributedString.init(string: name, attributes: [.font : UIFont.systemFont(ofSize: 32, weight: .heavy)])
         let ageAtrributedString = NSAttributedString.init(string: " \(age)", attributes: [.font : UIFont.systemFont(ofSize: 24, weight: .regular)])
@@ -19,7 +19,7 @@ struct User: ProducesCardViewModel {
         attributedText.append(nameAtrributedString)
         attributedText.append(ageAtrributedString)
         attributedText.append(professionAtrributedString)
-        return CardViewModel.init(imageName: imageName, attributedText: attributedText, textAlignment: .left)
+        return CardViewModel.init(imageNames: imageNames, attributedText: attributedText, textAlignment: .left)
     }
 }
 

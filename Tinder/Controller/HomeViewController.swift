@@ -14,23 +14,13 @@ class HomeViewController: UIViewController {
     let cardDocksView = UIView()
     let bottomStackView = HomeButtonStackView.init(frame: .zero)
     
-    //    let cardViewModels = ([
-    //        User(name: "Katy", age: 18, profession: "Music DJ", imageName: "lady1"),
-    //        User(name: "Annie", age: 26, profession: "Nurse", imageName: "lady2"),
-    //        Advertiser.init(title: "We wanna build Instagram!", brandName: "Hsin's App", posterPhotoName: "poster")
-    //        ] as [ProducesCardViewModel]).map { (producer) -> CardViewModel in
-    //            return producer.toCardViewModel()
-    //    }
-    
     let cardViewModels: [CardViewModel] = {
         let producers = [
-            User(name: "Katy", age: 18, profession: "Music DJ", imageName: "lady1"),
-            User(name: "Annie", age: 26, profession: "Nurse", imageName: "lady2"),
-            Advertiser.init(title: "We wanna build Instagram!", brandName: "Hsin's App", posterPhotoName: "poster")
+            Advertiser.init(title: "We wanna build Instagram!", brandName: "Hsin's App", posterPhotoName: "poster"),
+            User(name: "Katy", age: 18, profession: "Music DJ", imageNames: ["lady1-a", "lady1-b", "lady1-c", "lady1-d"]),
+            User(name: "Annie", age: 26, profession: "Nurse", imageNames: ["lady2-a", "lady2-b", "lady2-c", "lady2-d", "lady2-e"])
+            
         ] as! [ProducesCardViewModel]
-//        let cardViewModels = producers.map({ (producer) -> CardViewModel in
-//             return producer.toCardViewModel()
-//        })
         let cardViewModels = producers.map({return $0.toCardViewModel()})
         return cardViewModels
     }()
@@ -45,10 +35,6 @@ class HomeViewController: UIViewController {
     fileprivate func setupDummyCard() {
         cardViewModels.forEach { (cardVM) in
             let cardView = CardView()
-//            cardView.imageView.image = UIImage.init(named: cardVM.imageName)
-//            cardView.informationLabel.attributedText = cardVM.attributedText
-//            cardView.informationLabel.textAlignment = cardVM.textAlignment
-//            cardView.cardViewModel = cardVM
             cardView.setupViewModel(cardViewModel: cardVM)
             cardDocksView.addSubview(cardView)
             cardView.fillSuperView()

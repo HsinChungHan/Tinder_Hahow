@@ -23,7 +23,7 @@ struct Advertiser: ProducesCardViewModel {
         let attributedText = NSMutableAttributedString.init()
         attributedText.append(nameAtrributedString)
         attributedText.append(professionAtrributedString)
-        return CardViewModel.init(imageName: posterPhotoName, attributedText: attributedText, textAlignment: .center)
+        return CardViewModel.init(imageNames: [posterPhotoName], attributedText: attributedText, textAlignment: .center)
     }
 }
 
