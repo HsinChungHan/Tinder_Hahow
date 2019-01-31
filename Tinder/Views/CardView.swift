@@ -17,6 +17,9 @@ class CardView: UIView {
         }
     }
     
+    fileprivate let gradientLayer = CAGradientLayer()
+
+    
     public func setupViewModel(cardViewModel: CardViewModel){
         self.cardViewModel = cardViewModel
     }
@@ -48,6 +51,10 @@ class CardView: UIView {
     
     @objc func handlePan(gesture: UIPanGestureRecognizer){
         switch gesture.state {
+        case .began:
+            superview?.subviews.forEach({ (subview) in
+                subview.layer.removeAllAnimations()
+            })
         case .changed:
             handleChanged(gesture)
         case .ended:
@@ -69,8 +76,18 @@ class CardView: UIView {
         addSubview(imageView)
         imageView.fillSuperView()
         
+        //add CAGRaident layer into view's sublayer
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+        gradientLayer.locations = [0.5, 1.1]
+        self.layer.addSublayer(gradientLayer)
+        
         addSubview(informationLabel)
         informationLabel.anchor(top: nil, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 16, right: 16), size: .zero)
+    }
+    
+    override func layoutSubviews() {
+        //In here you can get cardView's frame
+        gradientLayer.frame = frame
     }
     
     fileprivate func addPanGesture() {
@@ -96,12 +113,10 @@ class CardView: UIView {
             }else{
                 self?.transform = .identity
             }
-        }) { [weak self] (completed) in
-            if completed{
-                self?.transform = .identity
-                if shouldDismiss{
-                    self?.removeFromSuperview()
-                }
+        }) { [weak self] (_) in
+            self?.transform = .identity
+            if shouldDismiss{
+                self?.removeFromSuperview()
             }
         }
     }

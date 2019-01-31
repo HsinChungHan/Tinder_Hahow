@@ -42,7 +42,8 @@ extension UIView{
             anchoredConstraints.height = heightAnchor.constraint(equalToConstant: size.height)
         }
         
-        [anchoredConstraints.top, anchoredConstraints.bottom, anchoredConstraints.leading, anchoredConstraints.trailing].forEach { (constraint) in
+        
+        [anchoredConstraints.top, anchoredConstraints.bottom, anchoredConstraints.leading, anchoredConstraints.trailing, anchoredConstraints.height, anchoredConstraints.width].forEach { (constraint) in
             constraint?.isActive = true
         }
         
