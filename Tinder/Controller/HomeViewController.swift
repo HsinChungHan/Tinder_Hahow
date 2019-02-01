@@ -28,7 +28,13 @@ class HomeViewController: UIViewController {
     //MARK:- ViewController's lifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        topStackView.settingButton.addTarget(self, action: #selector(handleSetting(sender:)), for: .touchUpInside)
         setupLayout()
+    }
+    
+    @objc func handleSetting(sender: UIButton){
+        let registerVC = RegisterViewController()
+        present(registerVC, animated: true, completion: nil)
     }
     
     //MARK:- Fileprivate

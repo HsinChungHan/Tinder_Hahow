@@ -24,6 +24,18 @@ class CardView: UIView {
             }
             barStackView.arrangedSubviews.first?.backgroundColor = UIColor.white
             
+            setupImageIndexObserver()
+            
+        }
+    }
+    
+    fileprivate func setupImageIndexObserver(){
+        cardViewModel.imageIndexObserver = {[weak self](image, imageIndex) in
+            self?.imageView.image = image
+            self?.barStackView.arrangedSubviews.forEach { [weak self] (view) in
+                view.backgroundColor = self?.barDeselectColor
+            }
+            self?.barStackView.arrangedSubviews[imageIndex].backgroundColor = .white
         }
     }
     
@@ -134,18 +146,10 @@ class CardView: UIView {
         let tapLocation = gesture.location(in: nil)
         let shouldAdvanceNextPhoto = tapLocation.x > frame.width/2 ? true : false
         if shouldAdvanceNextPhoto{
-            print("Go to next photo!")
-            imageIndex = min(imageIndex + 1, cardViewModel.imageNames.count - 1)
+            cardViewModel.advanceToNextPhoto()
         }else{
-            print("Back to last photo!")
-            imageIndex = max(0, imageIndex - 1)
+            cardViewModel.backToPreviousPhoto()
         }
-        imageView.image = UIImage.init(named: cardViewModel.imageNames[imageIndex])
-        barStackView.arrangedSubviews.forEach { (view) in
-            view.backgroundColor = barDeselectColor
-        }
-        barStackView.arrangedSubviews[imageIndex].backgroundColor = .white
-        
     }
     
     fileprivate func handleChanged(_ gesture: UIPanGestureRecognizer) {
