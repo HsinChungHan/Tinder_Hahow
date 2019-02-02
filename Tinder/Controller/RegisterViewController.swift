@@ -10,7 +10,7 @@ import UIKit
 
 class RegisterViewController: UIViewController {
 
-    //UI Component
+    //Mark:- UI Component
     lazy var selectPhotoButton: UIButton = {
         let button = UIButton.init(type: .system)
         button.setTitle("Select Photo", for: .normal)
@@ -57,9 +57,30 @@ class RegisterViewController: UIViewController {
         return button
     }()
     
-    lazy var stackView = UIStackView.init(arrangedSubviews: [selectPhotoButton, fullNameTextField, emailTextField, passwordTextField, registerButton])
+    
+    lazy var verticalStackView: UIStackView = {
+        let sv = UIStackView.init(arrangedSubviews:
+            [fullNameTextField,
+             emailTextField,
+             passwordTextField,
+             registerButton
+            ])
+        sv.axis = .vertical
+        sv.spacing = 8.0
+        sv.distribution = .fillEqually
+        return sv
+    }()
     
     
+    lazy var overallStackView = UIStackView.init(arrangedSubviews: [
+        selectPhotoButton,
+        verticalStackView
+        ]
+    )
+    
+    let gradientLayer = CAGradientLayer()
+    
+    //MARK:- ViewController function
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNotificationObserver()
@@ -73,6 +94,21 @@ class RegisterViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        gradientLayer.frame = view.bounds
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.verticalSizeClass == .compact{
+            //when the device is landscape...
+            overallStackView.axis = .horizontal
+        }else{
+            //when the device is portrait...
+            overallStackView.axis = .vertical
+        }
+    }
     
     //MARK:- Private
     fileprivate func setupNotificationObserver(){
@@ -90,19 +126,15 @@ class RegisterViewController: UIViewController {
         print(keyboardFrame)
         
         //Try to figure out how tall the gap between register button and view bottom
-        let bottomSpace = view.frame.height - stackView.frame.maxY
-        print(view.frame.height - stackView.frame.maxY)
-        print(view.frame.height - stackView.frame.origin.y - stackView.frame.height)
+        let bottomSpace = view.frame.height - overallStackView.frame.maxY
+        print(view.frame.height - overallStackView.frame.maxY)
+        print(view.frame.height - overallStackView.frame.origin.y - overallStackView.frame.height)
         
         let space: CGFloat = 10
         let viewOffsetY = keyboardFrame.height - bottomSpace + space
         UIView.animate(withDuration: 1.0) {[weak self] in
             self?.view.transform = CGAffineTransform.init(translationX: 0, y: -viewOffsetY)
         }
-//        UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.8, options: .curveEaseInOut, animations: {[weak self] in
-//            self?.view.transform = CGAffineTransform.init(translationX: 0, y: -viewOffsetY)
-//        }, completion: nil)
-//
     }
     
     @objc func handelKeyboardWillHide(){
@@ -112,7 +144,6 @@ class RegisterViewController: UIViewController {
     }
     
     fileprivate func setupGradientLayer(){
-        let gradientLayer = CAGradientLayer()
         let topColor = #colorLiteral(red: 0.9996470809, green: 0.3580417037, blue: 0.1868433356, alpha: 1)
         let bottomColor = #colorLiteral(red: 0.9977402091, green: 0.03317080066, blue: 0.6062759757, alpha: 1)
         gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
@@ -124,11 +155,13 @@ class RegisterViewController: UIViewController {
     
     
     fileprivate func setupLayout(){
-        stackView.axis = .vertical
-        stackView.spacing = 8.0
-        view.addSubview(stackView)
-        stackView.anchor(top: nil, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 0, right: 50), size: .zero)
-        stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+//        stackView.axis = .vertical
+        overallStackView.axis = .vertical
+        selectPhotoButton.widthAnchor.constraint(equalToConstant: 275).isActive = true
+        overallStackView.spacing = 8.0
+        view.addSubview(overallStackView)
+        overallStackView.anchor(top: nil, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 0, right: 50), size: .zero)
+        overallStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
 
     fileprivate func setupTapGesture(){
