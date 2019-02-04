@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class RegistrationViewModel{
     var fullName: String?{
@@ -27,7 +28,7 @@ class RegistrationViewModel{
         }
     }
     
-    
+   
     fileprivate func checkFormValidity(){
         let isFormValid = fullName?.isEmpty == false && email?.isEmpty == false && password?.isEmpty == false
         isFormValidObserver?(isFormValid)

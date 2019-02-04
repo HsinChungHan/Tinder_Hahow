@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import JGProgressHUD
 
 class RegisterViewController: UIViewController {
 
@@ -68,8 +70,31 @@ class RegisterViewController: UIViewController {
         button.setTitleColor(.gray, for: .disabled)
         button.layer.cornerRadius = 25.0
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         return button
     }()
+    
+    @objc func handleRegister(sneder: UIButton){
+        handleTapDismissKeyboard()
+        //email and password to sign in firebase
+        guard let email = registrationViewModel.email, let password = registrationViewModel.password else {return}
+        Auth.auth().createUser(withEmail: email, password: password) { [unowned self](result, error) in
+            if let error = error{
+//                print(error.localizedDescription)
+                self.showHudWithError(error: error)
+                return
+            }
+            print("Successfully register user: \(result?.user.uid)")
+        }
+    }
+    
+    fileprivate func showHudWithError(error: Error){
+        let hub = JGProgressHUD.init(style: .dark)
+        hub.textLabel.text = "Fail registration!"
+        hub.detailTextLabel.text = error.localizedDescription
+        hub.show(in: view)
+        hub.dismiss(afterDelay: 4.0, animated: true)
+    }
     
     
     lazy var verticalStackView: UIStackView = {
