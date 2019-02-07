@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class HomeViewController: UIViewController {
     //MARK:- Properties
@@ -14,22 +15,25 @@ class HomeViewController: UIViewController {
     let cardDocksView = UIView()
     let bottomStackView = HomeButtonStackView.init(frame: .zero)
     
-    let cardViewModels: [CardViewModel] = {
-        let producers = [
-            Advertiser.init(title: "We wanna build Instagram!", brandName: "Hsin's App", posterPhotoName: "poster"),
-            User(name: "Katy", age: 18, profession: "Music DJ", imageNames: ["lady1-a", "lady1-b", "lady1-c", "lady1-d"]),
-            User(name: "Annie", age: 26, profession: "Nurse", imageNames: ["lady2-a", "lady2-b", "lady2-c", "lady2-d", "lady2-e"])
-            
-        ] as! [ProducesCardViewModel]
-        let cardViewModels = producers.map({return $0.toCardViewModel()})
-        return cardViewModels
-    }()
+//    let cardViewModels: [CardViewModel] = {
+//        let producers = [
+//            Advertiser.init(title: "We wanna build Instagram!", brandName: "Hsin's App", posterPhotoName: "poster"),
+//            User(name: "Katy", age: 18, profession: "Music DJ", imageNames: ["lady1-a", "lady1-b", "lady1-c", "lady1-d"]),
+//            User(name: "Annie", age: 26, profession: "Nurse", imageNames: ["lady2-a", "lady2-b", "lady2-c", "lady2-d", "lady2-e"])
+//
+//        ] as! [ProducesCardViewModel]
+//        let cardViewModels = producers.map({return $0.toCardViewModel()})
+//        return cardViewModels
+//    }()
+    
+    var cardViewModels = [CardViewModel]()
     
     //MARK:- ViewController's lifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         topStackView.settingButton.addTarget(self, action: #selector(handleSetting(sender:)), for: .touchUpInside)
         setupLayout()
+        fetchUserFromFirestore()
     }
     
     @objc func handleSetting(sender: UIButton){
@@ -62,6 +66,23 @@ class HomeViewController: UIViewController {
         overallStackView.bringSubviewToFront(cardDocksView)
         
         setupDummyCard()
+    }
+    
+    fileprivate func fetchUserFromFirestore(){
+        Firestore.firestore().collection("users").getDocuments {[unowned self] (snapshot, error) in
+            if let error = error{
+                print("Failed to fetch user from firestore: \(error.localizedDescription)")
+                return
+            }
+//            print(snapshot)
+            snapshot?.documents.forEach({ (documentSnapshot) in
+                let userDictonary = documentSnapshot.data()
+//                print(userDictonary)
+                let user = User.init(dictionary: userDictonary)
+                self.cardViewModels.append(user.toCardViewModel())
+            })
+            self.setupDummyCard()
+        }
     }
 }
 
