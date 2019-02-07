@@ -10,20 +10,28 @@ import UIKit
 
 class HomeButtonStackView: UIStackView {
 
+    static func setupButton(image: UIImage) -> UIButton{
+        let button = UIButton.init(type: .system)
+        button.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        return button
+    }
+    
+    let refreshButton = setupButton(image: #imageLiteral(resourceName: "refresh_circle"))
+    let dislikeButton = setupButton(image: #imageLiteral(resourceName: "dismiss_circle"))
+    let superlikeButton = setupButton(image: #imageLiteral(resourceName: "super_like_circle"))
+    let likeButton = setupButton(image: #imageLiteral(resourceName: "like_circle"))
+    let specialButton = setupButton(image: #imageLiteral(resourceName: "boost_circle"))
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         heightAnchor.constraint(equalToConstant: 100).isActive = true
         axis = .horizontal
         distribution = .fillEqually
-        
-        let subviews = [#imageLiteral(resourceName: "refresh_circle"), #imageLiteral(resourceName: "dismiss_circle"), #imageLiteral(resourceName: "super_like_circle"), #imageLiteral(resourceName: "like_circle"), #imageLiteral(resourceName: "boost_circle")].map { (image) -> UIButton in
-            let button = UIButton.init(type: .system)
-            button.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
-            return button
-        }
-        
-        subviews.forEach { (button) in
-            addArrangedSubview(button)
+    
+        [refreshButton, dislikeButton, superlikeButton, likeButton, specialButton].forEach { (button) in
+            self.addArrangedSubview(button)
         }
         
     }
