@@ -21,8 +21,16 @@ class RegistrationViewController: UIViewController {
         button.backgroundColor = .white
         button.layer.cornerRadius = 16.0
         button.heightAnchor.constraint(equalToConstant: 275).isActive = true
+        button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
+        button.imageView?.contentMode = .scaleAspectFill
         return button
     }()
+    
+    @objc fileprivate func handleSelectPhoto(sender: UIButton){
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true, completion: nil)
+    }
     
     let fullNameTextField: CustomTextField = {
         let tf = CustomTextField.init(padding: 24, backgroundColor: .white)
@@ -63,8 +71,6 @@ class RegistrationViewController: UIViewController {
         let button = UIButton.init(type: .system)
         button.setTitle("Register", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
-//        button.setTitleColor(.white, for: .normal)
-//        button.backgroundColor = #colorLiteral(red: 0.8060349822, green: 0.03426375985, blue: 0.3326358795, alpha: 1)
         button.isEnabled = false
         button.backgroundColor = .lightGray
         button.setTitleColor(.gray, for: .disabled)
@@ -74,17 +80,15 @@ class RegistrationViewController: UIViewController {
         return button
     }()
     
+    let registeringHUB = JGProgressHUD.init(style: .dark)
     @objc func handleRegister(sneder: UIButton){
         handleTapDismissKeyboard()
         //email and password to sign in firebase
-        guard let email = registrationViewModel.email, let password = registrationViewModel.password else {return}
-        Auth.auth().createUser(withEmail: email, password: password) { [unowned self](result, error) in
+        registrationViewModel.performRegistration { (error) in
             if let error = error{
-//                print(error.localizedDescription)
                 self.showHudWithError(error: error)
-                return
             }
-            print("Successfully register user: \(result?.user.uid)")
+            print("Finish our user registering")
         }
     }
     
@@ -123,11 +127,15 @@ class RegistrationViewController: UIViewController {
     //MARK:- ViewController function
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNotificationObserver()
         setupTapGesture()
         setupGradientLayer()
         setupLayout()
         setupRegistrationViewModelObserver()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNotificationObserver()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -154,14 +162,24 @@ class RegistrationViewController: UIViewController {
     //MARK:- Private
     
     fileprivate func setupRegistrationViewModelObserver(){
-        registrationViewModel.isFormValidObserver = {[unowned self](isFormValid) in
+        registrationViewModel.bindableIsFormValid.bind { [unowned self] (isFormValid) in
+            guard let isFormValid = isFormValid else {return}
             self.registerButton.isEnabled = isFormValid
-            if isFormValid{
-                self.registerButton.setTitleColor(.white, for: .normal)
-                self.registerButton.backgroundColor = #colorLiteral(red: 0.8060349822, green: 0.03426375985, blue: 0.3326358795, alpha: 1)
+            self.registerButton.setTitleColor(isFormValid ? .white : .gray, for: .normal)
+            self.registerButton.backgroundColor = isFormValid ? #colorLiteral(red: 0.8060349822, green: 0.03426375985, blue: 0.3326358795, alpha: 1) : .lightGray
+        }
+        
+        registrationViewModel.bindleImage.bind { [unowned self](image) in
+            self.selectPhotoButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+        
+        registrationViewModel.bindaleIsRegistering.bind {[unowned self] (isRegistering) in
+            guard let isRegistering = isRegistering else {return}
+            if isRegistering{
+                self.registeringHUB.textLabel.text = "Registering"
+                self.registeringHUB.show(in: self.view)
             }else{
-                self.registerButton.backgroundColor = .lightGray
-                self.registerButton.setTitleColor(.gray, for: .disabled)
+                self.registeringHUB.dismiss()
             }
         }
     }
@@ -225,11 +243,24 @@ class RegistrationViewController: UIViewController {
     }
     
     @objc func handleTapDismissKeyboard(){
-//        resignFirstResponder()
         view.endEditing(true)
         UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.8, options: .curveEaseInOut, animations: {[weak self] in
             self?.view.transform = CGAffineTransform.identity
             }, completion: nil)
     }
     
+}
+
+
+extension RegistrationViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as? UIImage
+        registrationViewModel.bindleImage.value = image
+        dismiss(animated: true, completion: nil)
+        
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
 }

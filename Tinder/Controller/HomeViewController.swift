@@ -33,7 +33,7 @@ class HomeViewController: UIViewController {
     }
     
     @objc func handleSetting(sender: UIButton){
-        let registerVC = RegisterViewController()
+        let registerVC = RegistrationViewController()
         present(registerVC, animated: true, completion: nil)
     }
     
