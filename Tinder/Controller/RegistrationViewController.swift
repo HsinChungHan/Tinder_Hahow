@@ -84,11 +84,15 @@ class RegistrationViewController: UIViewController {
     @objc func handleRegister(sneder: UIButton){
         handleTapDismissKeyboard()
         //email and password to sign in firebase
-        registrationViewModel.performRegistration { (error) in
+        registrationViewModel.performRegistration { [unowned self](error) in
             if let error = error{
                 self.showHudWithError(error: error)
+                return
             }
             print("Finish our user registering")
+            // Jump to HomeViewController
+            let homeViewController = HomeViewController()
+            self.present(homeViewController, animated: true, completion: nil)
         }
     }
     

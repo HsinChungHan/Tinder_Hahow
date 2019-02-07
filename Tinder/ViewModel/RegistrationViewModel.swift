@@ -31,28 +31,47 @@ class RegistrationViewModel{
             }
             print("Successfully register user: \(result?.user.uid ?? "")")
             //upload user profile image into firebase storage
-            let fileName = UUID().uuidString
-            let storageRef = Storage.storage().reference(withPath: "/images/\(fileName)")
-            let imageData = self.bindleImage.value?.jpegData(compressionQuality: 0.75) ?? Data()
-            storageRef.putData(imageData, metadata: nil, completion: { (_, error) in
-                if let error = error{
-                     completion(error)
-                    return
-                }
-                print("Sucessfully upload image to storage!")
-                storageRef.downloadURL(completion: { [unowned self](url, error) in
-                    if let error = error{
-                         completion(error)
-                        return
-                    }
-                    //Successfully regitered user in firebase
-                    self.bindaleIsRegistering.value = false
-                    print("User pfofile image download url is \(url?.absoluteString ?? "")")
-                })
-            })
+            self.saveImageToFirebase(completion: completion)
         }
     }
     
+    fileprivate func saveImageToFirebase(completion: @escaping (_ error: Error?) -> ()){
+        let fileName = UUID().uuidString
+        let storageRef = Storage.storage().reference(withPath: "/images/\(fileName)")
+        let imageData = self.bindleImage.value?.jpegData(compressionQuality: 0.75) ?? Data()
+        storageRef.putData(imageData, metadata: nil, completion: { (_, error) in
+            if let error = error{
+                completion(error)
+                return
+            }
+            print("Sucessfully upload image to storage!")
+            storageRef.downloadURL(completion: { [unowned self](url, error) in
+                if let error = error{
+                    completion(error)
+                    return
+                }
+                //Successfully regitered user in firebase
+                self.bindaleIsRegistering.value = false
+                print("User pfofile image download url is \(url?.absoluteString ?? "")")
+                //just for invoking completion handler when successfully regisytered user
+                let imageUrl = url?.absoluteString ?? ""
+                self.saveInfoToFirestore(imageUrl: imageUrl, completion: completion)
+            })
+        })
+    }
+    
+    fileprivate func saveInfoToFirestore(imageUrl: String, completion: @escaping (_ error: Error?) -> ()){
+        let uid = Auth.auth().currentUser?.uid ?? ""
+        let docData = ["fullName" : fullName ?? "", "uid": uid, "imageUrl1" : imageUrl]
+        Firestore.firestore().collection("users").document(uid).setData(docData) { (error) in
+            if let error = error{
+                completion(error)
+                return
+            }
+            print("Suceesfully upload user's information in firestore")
+            completion(nil)
+        }
+    }
     
     //reactive programming
     var bindableIsFormValid = Bindable<Bool>()
