@@ -34,12 +34,14 @@ class CardView: UIView {
     }
     
     fileprivate func setupImageIndexObserver(){
-        cardViewModel.imageIndexObserver = {[weak self](image, imageIndex) in
-            self?.imageView.image = image
-            self?.barStackView.arrangedSubviews.forEach { [weak self] (view) in
+        cardViewModel.imageIndexObserver = {[unowned self](imageUrl, imageIndex) in
+//            self?.imageView.image = image
+            //use SDWebImage to load image from fireStorage by url
+            self.imageView.sd_setImage(with: imageUrl)
+            self.barStackView.arrangedSubviews.forEach { [weak self] (view) in
                 view.backgroundColor = self?.barDeselectColor
             }
-            self?.barStackView.arrangedSubviews[imageIndex].backgroundColor = .white
+            self.barStackView.arrangedSubviews[imageIndex].backgroundColor = .white
         }
     }
     

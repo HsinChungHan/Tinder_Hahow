@@ -28,13 +28,14 @@ class CardViewModel {
     }
     var imageIndex: Int = 0{
         didSet{
-            let image = UIImage.init(named: imageNames[imageIndex])
-            imageIndexObserver?(image, imageIndex)
+//            let image = UIImage.init(named: imageNames[imageIndex])
+            let imageUrl = URL.init(string: imageNames[imageIndex]) 
+            imageIndexObserver?(imageUrl, imageIndex)
         }
     }
     
     //reactive programming
-    var imageIndexObserver: ((_ image: UIImage?, _ imageIndex: Int) -> ())?
+    var imageIndexObserver: ((_ imageUrl: URL?, _ imageIndex: Int) -> ())?
     
     
     func advanceToNextPhoto(){

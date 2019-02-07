@@ -15,17 +15,6 @@ class HomeViewController: UIViewController {
     let cardDocksView = UIView()
     let bottomStackView = HomeButtonStackView.init(frame: .zero)
     
-//    let cardViewModels: [CardViewModel] = {
-//        let producers = [
-//            Advertiser.init(title: "We wanna build Instagram!", brandName: "Hsin's App", posterPhotoName: "poster"),
-//            User(name: "Katy", age: 18, profession: "Music DJ", imageNames: ["lady1-a", "lady1-b", "lady1-c", "lady1-d"]),
-//            User(name: "Annie", age: 26, profession: "Nurse", imageNames: ["lady2-a", "lady2-b", "lady2-c", "lady2-d", "lady2-e"])
-//
-//        ] as! [ProducesCardViewModel]
-//        let cardViewModels = producers.map({return $0.toCardViewModel()})
-//        return cardViewModels
-//    }()
-    
     var cardViewModels = [CardViewModel]()
     
     //MARK:- ViewController's lifeCycle
@@ -69,7 +58,13 @@ class HomeViewController: UIViewController {
     }
     
     fileprivate func fetchUserFromFirestore(){
-        Firestore.firestore().collection("users").getDocuments {[unowned self] (snapshot, error) in
+//        let query = Firestore.firestore().collection("users").whereField("profession", isEqualTo: "Nurse")
+//        let query = Firestore.firestore().collection("users").whereField("age", isGreaterThan: 20)
+//         let query = Firestore.firestore().collection("users").whereField("age", isGreaterThan: 20).whereField("age", isLessThan: 25)
+        let query = Firestore.firestore().collection("users").whereField("friends", arrayContains: "Kevin")
+//        let query = Firestore.firestore().collection("users").whereField("friends", arrayContains: "Kevin")
+        
+        query.getDocuments {[unowned self] (snapshot, error) in
             if let error = error{
                 print("Failed to fetch user from firestore: \(error.localizedDescription)")
                 return
