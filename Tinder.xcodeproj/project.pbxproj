@@ -10,6 +10,7 @@
 		2657B5A3276AC5CA60FF4039 /* Pods_TinderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7311CC6632551B145D37B2E1 /* Pods_TinderUITests.framework */; };
 		9DCCF34170BFDA6AF8D92D0F /* Pods_TinderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6C9573E2B9A21F7FEFB7F1 /* Pods_TinderTests.framework */; };
 		D11B5630220D417B00B1AD49 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11B562F220D417B00B1AD49 /* SettingController.swift */; };
+		D11B5634220D59A500B1AD49 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11B5633220D59A500B1AD49 /* SettingCell.swift */; };
 		D16A0DFB220410E600A4A377 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16A0DFA220410E600A4A377 /* RegistrationViewController.swift */; };
 		D16A0DFD220418BC00A4A377 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16A0DFC220418BC00A4A377 /* CustomTextField.swift */; };
 		D16A0E032205853C00A4A377 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16A0E022205853C00A4A377 /* RegistrationViewModel.swift */; };
@@ -59,6 +60,7 @@
 		6F8C0E8E6202436C681A2D8B /* Pods-Tinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tinder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tinder/Pods-Tinder.debug.xcconfig"; sourceTree = "<group>"; };
 		7311CC6632551B145D37B2E1 /* Pods_TinderUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TinderUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D11B562F220D417B00B1AD49 /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
+		D11B5633220D59A500B1AD49 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		D16A0DFA220410E600A4A377 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		D16A0DFC220418BC00A4A377 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		D16A0E022205853C00A4A377 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				D16B435321F59EA400A4A702 /* HomeButtonStackView.swift */,
 				D16B435921F6CA4A00A4A702 /* CardView.swift */,
 				D16A0DFC220418BC00A4A377 /* CustomTextField.swift */,
+				D11B5633220D59A500B1AD49 /* SettingCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				D16B434821F584BB00A4A702 /* HomeViewController.swift in Sources */,
 				D11B5630220D417B00B1AD49 /* SettingController.swift in Sources */,
 				D16B437221F98A8800A4A702 /* Advertiser.swift in Sources */,
+				D11B5634220D59A500B1AD49 /* SettingCell.swift in Sources */,
 				D16B435421F59EA400A4A702 /* HomeButtonStackView.swift in Sources */,
 				D16B434A21F58FB200A4A702 /* UIView_Extension.swift in Sources */,
 				D16B436C21F9597F00A4A702 /* CardViewModel.swift in Sources */,

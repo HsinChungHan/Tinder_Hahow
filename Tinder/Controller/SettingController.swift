@@ -37,14 +37,7 @@ class SettingController: UITableViewController {
         present(imagePickerController, animated: true, completion: nil)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupNavigationItens()
-        setupTableViewLayout()
-    }
-    
-    //MARK:- UITableView Controller life function
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    lazy var headerView: UIView = {
         let headerView = UIView()
         headerView.addSubview(image1Button)
         
@@ -62,11 +55,73 @@ class SettingController: UITableViewController {
         stackView.anchor(top: headerView.topAnchor, bottom: headerView.bottomAnchor, leading: image1Button.trailingAnchor, trailing: headerView.trailingAnchor, padding: stackViewPadding, size: .zero)
         
         return headerView
+    }()
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupNavigationItens()
+        setupTableViewLayout()
+    }
+    
+    
+    class HeaderLabel: UILabel {
+        override func draw(_ rect: CGRect) {
+            super.drawText(in: rect.insetBy(dx: 16, dy: 0))
+        }
+    }
+    
+    //MARK:- UITableView Controller life cycle function
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0{
+            return headerView
+        }
+        let headerLabel = HeaderLabel()
+        var headerText = ""
+        switch section {
+        case 1:
+            headerText = "Name"
+        case 2:
+            headerText = "Profession"
+        case 3:
+            headerText = "Age"
+        default:
+            headerText = "Bio"
+        }
+        headerLabel.text = headerText
+        return headerLabel
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 300
+        return section == 0 ? 300 : 40
     }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 5
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? 0 : 1
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = SettingCell.init(style: .default, reuseIdentifier: nil)
+        var headerText = ""
+        switch indexPath.section {
+        case 1:
+            headerText = "Enter Name"
+        case 2:
+            headerText = "Enter Profession"
+        case 3:
+            headerText = "Enter Age"
+        default:
+            headerText = "Enter Bio"
+        }
+        cell.textField.placeholder = headerText
+        return cell
+    }
+    
+    
     
     //MARK: - Private
     fileprivate func setupNavigationItens() {
@@ -86,6 +141,7 @@ class SettingController: UITableViewController {
     fileprivate func setupTableViewLayout() {
         tableView.backgroundColor = UIColor.init(white: 0.95, alpha: 1)
         tableView.tableFooterView = UIView()
+        tableView.keyboardDismissMode = .interactive
     }
 }
 
