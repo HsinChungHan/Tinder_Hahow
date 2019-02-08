@@ -32,8 +32,8 @@ class HomeViewController: UIViewController {
     }
     
     @objc func handleSetting(sender: UIButton){
-        let registerVC = RegistrationViewController()
-        present(registerVC, animated: true, completion: nil)
+        let navigationVC = UINavigationController.init(rootViewController: SettingController())
+        present(navigationVC, animated: true, completion: nil)
     }
     
     //MARK:- Fileprivate
